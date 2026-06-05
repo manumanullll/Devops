@@ -11,6 +11,7 @@ import {
     addTask,
     isDuplicate,
     sortTasks,
+    searchTasks,
 } from '../src/taskManager.js';
 
 describe('Contagens de Tarefas', () => {
@@ -130,5 +131,28 @@ describe('Exercício 6 - Ordenar Tarefas', () => {
 
     it('deve retornar array vazio ao tentar ordenar lista vazia', () => {
         expect(sortTasks([])).toHaveLength(0);
+    });
+});
+
+describe('Exercício 7 - Busca por Texto', () => {
+    const mockTasks = [
+        { id: 1, title: 'Estudar Vitest', completed: false },
+        { id: 2, title: 'Correr na Asa Norte', completed: false },
+        { id: 3, title: 'Testar aplicação', completed: true },
+    ];
+
+    it('deve encontrar as tarefas correspondentes ignorando letras maiúsculas/minúsculas', () => {
+        const result = searchTasks(mockTasks, 'EST'); // Deve achar "Estudar" e "Testar"
+        expect(result).toHaveLength(2);
+    });
+
+    it('deve retornar array vazio se nenhuma tarefa contiver a query', () => {
+        const result = searchTasks(mockTasks, 'pirenopolis');
+        expect(result).toHaveLength(0);
+    });
+
+    it('deve retornar todas as tarefas se a query for uma string vazia', () => {
+        const result = searchTasks(mockTasks, '');
+        expect(result).toHaveLength(3);
     });
 });
