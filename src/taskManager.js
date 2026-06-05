@@ -46,4 +46,24 @@ export function filterByPriority(tasks, priority) {
     return tasks.filter((task) => task.priority === priority);
 }
 
+export function isDuplicate(tasks, title) {
+    if (!title || typeof title !== 'string') return false;
+
+    const formattedTitle = title.trim().toLowerCase();
+    return tasks.some((task) => task.title.trim().toLowerCase() === formattedTitle);
+}
+
+export function addTask(tasks, title) {
+    if (!title || typeof title !== 'string' || title.trim().length < 3) {
+        throw new Error('Título inválido');
+    }
+
+    if (isDuplicate(tasks, title)) {
+        throw new Error('Tarefa duplicada');
+    }
+
+    const newTask = createTask(title);
+    return [...tasks, newTask];
+}
+
 export const filterTask = filterTasks;
