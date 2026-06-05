@@ -7,7 +7,9 @@ import {
     countPending,
     createTask,
     validatePriority,
-    filterByPriority
+    filterByPriority,
+    addTask,
+    isDuplicate,
 } from '../src/taskManager.js';
 
 describe('Contagens de Tarefas', () => {
@@ -78,6 +80,32 @@ describe('Exercício 4 - Prioridade das Tarefas', () => {
         it('deve retornar array vazio se nenhuma tarefa corresponder à prioridade', () => {
             const result = filterByPriority(mockTasks, 'medium');
             expect(result).toHaveLength(0);
+        });
+    });
+});
+
+describe('Exercício 5 - Impedir Tarefas Duplicadas', () => {
+    const mockTasks = [
+        { id: 1, title: 'Estudar Vitest', completed: false, priority: 'medium' }
+    ];
+
+    describe('isDuplicate', () => {
+        it('deve retornar true se o título for idêntico', () => {
+            expect(isDuplicate(mockTasks, 'Estudar Vitest')).toBe(true);
+        });
+
+        it('deve retornar true mesmo com diferenças de case-insensitive e espaços extras', () => {
+            expect(isDuplicate(mockTasks, '  estudar vitest  ')).toBe(true);
+        });
+
+        it('deve retornar false se o título não existir na lista', () => {
+            expect(isDuplicate(mockTasks, 'Correr na Asa Norte')).toBe(false);
+        });
+    });
+
+    describe('addTask com validação de duplicidade', () => {
+        it('deve lançar erro se tentar adicionar uma tarefa com título duplicado', () => {
+            expect(() => addTask(mockTasks, 'Estudar Vitest')).toThrow('Tarefa duplicada');
         });
     });
 });
