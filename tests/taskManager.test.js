@@ -10,6 +10,7 @@ import {
     filterByPriority,
     addTask,
     isDuplicate,
+    sortTasks,
 } from '../src/taskManager.js';
 
 describe('Contagens de Tarefas', () => {
@@ -107,5 +108,27 @@ describe('Exercício 5 - Impedir Tarefas Duplicadas', () => {
         it('deve lançar erro se tentar adicionar uma tarefa com título duplicado', () => {
             expect(() => addTask(mockTasks, 'Estudar Vitest')).toThrow('Tarefa duplicada');
         });
+    });
+});
+
+describe('Exercício 6 - Ordenar Tarefas', () => {
+    it('deve retornar pendentes antes de concluídas e manter a imutabilidade', () => {
+        const mockTasks = [
+            { id: 1, title: 'Tarefa A', completed: true },
+            { id: 2, title: 'Tarefa B', completed: false },
+            { id: 3, title: 'Tarefa C', completed: false },
+        ];
+
+        const result = sortTasks(mockTasks);
+
+        expect(result).toHaveLength(3);
+        expect(result[0].title).toBe('Tarefa B');
+        expect(result[1].title).toBe('Tarefa C');
+        expect(result[2].title).toBe('Tarefa A');
+        expect(result).not.toBe(mockTasks);
+    });
+
+    it('deve retornar array vazio ao tentar ordenar lista vazia', () => {
+        expect(sortTasks([])).toHaveLength(0);
     });
 });
