@@ -70,4 +70,15 @@ export function sortTasks(tasks) {
     return [...tasks].sort((a, b) => Number(a.completed) - Number(b.completed));
 }
 
+export function searchTasks(tasks, query) {
+    if (!query || query.trim() === '') {
+        return [...tasks];
+    }
+
+    const formattedQuery = query.toLowerCase().trim();
+    return tasks.filter((task) =>
+        task.title.toLowerCase().includes(formattedQuery)
+    );
+}
+
 export const filterTask = filterTasks;
