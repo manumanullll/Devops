@@ -1,0 +1,4 @@
+NOME COMPLETO: Manuela Costacurta Dewes
+MATRÍCULA: 241429003
+DISCIPLINA: ADS031 - Manutenção de Software e DevOps
+ATIVIDADE: Testes de Integração com API HTTP - SWAPI
